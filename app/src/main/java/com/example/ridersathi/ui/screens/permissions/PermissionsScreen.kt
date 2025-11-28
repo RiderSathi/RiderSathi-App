@@ -40,11 +40,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.ridersathi.ui.theme.CharcoalLight
-import com.example.ridersathi.ui.theme.NeonCyan
+import com.example.ridersathi.ui.theme.SoftPurple
+import com.example.ridersathi.ui.theme.AccentPurple
 import com.example.ridersathi.ui.theme.TextGray
-import com.example.ridersathi.ui.theme.TextWhite
-import com.example.ridersathi.ui.theme.WarmOrange
+import com.example.ridersathi.ui.theme.TextDark
+import com.example.ridersathi.ui.theme.WarningOrange
 
 @Composable
 fun PermissionsScreen(navController: NavController) {
@@ -77,7 +77,7 @@ fun PermissionsScreen(navController: NavController) {
             Text(
                 text = "Enable location &\nproximity",
                 style = MaterialTheme.typography.headlineLarge,
-                color = TextWhite,
+                color = TextDark,
                 textAlign = TextAlign.Center
             )
 
@@ -128,7 +128,7 @@ fun PermissionsScreen(navController: NavController) {
                     .fillMaxWidth()
                     .height(56.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = WarmOrange,
+                    containerColor = WarningOrange,
                     contentColor = Color.White
                 ),
                 shape = RoundedCornerShape(28.dp)
@@ -145,7 +145,7 @@ fun PermissionsScreen(navController: NavController) {
                 Text(
                     text = "Manage manually",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = TextWhite,
+                    color = TextDark,
                     textDecoration = TextDecoration.None
                 )
             }
@@ -175,13 +175,13 @@ fun PermissionItem(
             Box(
                 modifier = Modifier
                     .size(48.dp)
-                    .background(CharcoalLight, RoundedCornerShape(12.dp)),
+                    .background(SoftPurple, RoundedCornerShape(12.dp)),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     imageVector = icon,
                     contentDescription = null,
-                    tint = WarmOrange,
+                    tint = WarningOrange,
                     modifier = Modifier.size(24.dp)
                 )
             }
@@ -192,7 +192,7 @@ fun PermissionItem(
                 Text(
                     text = title,
                     style = MaterialTheme.typography.titleLarge,
-                    color = TextWhite
+                    color = TextDark
                 )
                 Text(
                     text = description,
@@ -213,9 +213,9 @@ fun PermissionItem(
             onCheckedChange = onCheckedChange,
             colors = SwitchDefaults.colors(
                 checkedThumbColor = Color.White,
-                checkedTrackColor = WarmOrange,
+                checkedTrackColor = WarningOrange,
                 uncheckedThumbColor = Color.Gray,
-                uncheckedTrackColor = CharcoalLight
+                uncheckedTrackColor = SoftPurple
             )
         )
     }

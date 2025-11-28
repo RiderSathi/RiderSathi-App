@@ -10,6 +10,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -22,12 +24,12 @@ fun PremiumScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(CharcoalDark)
+            .background(BackgroundLight)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(24.dp)
+                .padding(20.dp)
         ) {
             // Header
             Row(
@@ -35,13 +37,14 @@ fun PremiumScreen(navController: NavController) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 IconButton(onClick = { navController.popBackStack() }) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = TextWhite)
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = TextDark)
                 }
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = "Premium Features",
-                    style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
-                    color = TextWhite
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = TextDark,
+                    fontWeight = FontWeight.Bold
                 )
             }
 
@@ -49,14 +52,15 @@ fun PremiumScreen(navController: NavController) {
 
             Text(
                 text = "Unlock the full potential\nof your ride",
-                style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
-                color = TextWhite
+                style = MaterialTheme.typography.headlineMedium,
+                color = TextDark,
+                fontWeight = FontWeight.Bold
             )
 
             Spacer(modifier = Modifier.height(32.dp))
 
             // Monthly Plan
-            PlanCard(
+            ModernPlanCard(
                 title = "Monthly",
                 price = "$9.99",
                 period = "/month",
@@ -66,13 +70,14 @@ fun PremiumScreen(navController: NavController) {
                     "Advanced Fuel & Service Tracking"
                 ),
                 isRecommended = false,
-                buttonText = "Select Plan"
+                buttonText = "Select Plan",
+                backgroundColor = SoftBlue
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             // Yearly Plan
-            PlanCard(
+            ModernPlanCard(
                 title = "Yearly",
                 price = "$99.99",
                 period = "/year",
@@ -82,7 +87,8 @@ fun PremiumScreen(navController: NavController) {
                     "Advanced Fuel & Service Tracking"
                 ),
                 isRecommended = true,
-                buttonText = "Subscribe Now"
+                buttonText = "Subscribe Now",
+                backgroundColor = SoftPurple
             )
 
             Spacer(modifier = Modifier.weight(1f))
@@ -91,62 +97,66 @@ fun PremiumScreen(navController: NavController) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .shadow(4.dp, RoundedCornerShape(16.dp))
+                    .clip(RoundedCornerShape(16.dp))
                     .background(
                         brush = Brush.linearGradient(
-                            colors = listOf(NeonCyan, Color(0xFF00E676))
-                        ),
-                        shape = RoundedCornerShape(16.dp)
+                            colors = listOf(AccentPurple, AccentPink)
+                        )
                     )
-                    .padding(16.dp),
+                    .padding(20.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
                         "Upgrade to Premium",
-                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                        color = CharcoalDark
+                        style = MaterialTheme.typography.titleLarge,
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold
                     )
                     Text(
                         "Unlock exclusive features and benefits",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = CharcoalDark.copy(alpha = 0.8f)
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.White.copy(alpha = 0.9f)
                     )
                 }
             }
+
+            Spacer(modifier = Modifier.height(20.dp))
         }
     }
 }
 
 @Composable
-fun PlanCard(
+fun ModernPlanCard(
     title: String,
     price: String,
     period: String,
     features: List<String>,
     isRecommended: Boolean,
-    buttonText: String
+    buttonText: String,
+    backgroundColor: Color
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(CharcoalMedium, RoundedCornerShape(16.dp))
-            .border(
-                width = if (isRecommended) 2.dp else 1.dp,
-                color = if (isRecommended) NeonCyan else Color.White.copy(alpha = 0.05f),
-                shape = RoundedCornerShape(16.dp)
-            )
+            .shadow(if (isRecommended) 6.dp else 2.dp, RoundedCornerShape(20.dp))
+            .clip(RoundedCornerShape(20.dp))
+            .background(backgroundColor)
             .padding(20.dp)
     ) {
         if (isRecommended) {
             Box(
                 modifier = Modifier
-                    .background(NeonCyan.copy(alpha = 0.2f), RoundedCornerShape(8.dp))
-                    .padding(horizontal = 12.dp, vertical = 4.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(AccentPurple)
+                    .padding(horizontal = 12.dp, vertical = 6.dp)
             ) {
                 Text(
                     "Best Value",
-                    style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                    color = NeonCyan
+                    style = MaterialTheme.typography.labelSmall,
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold
                 )
             }
             Spacer(modifier = Modifier.height(12.dp))
@@ -154,8 +164,9 @@ fun PlanCard(
 
         Text(
             text = title,
-            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-            color = TextWhite
+            style = MaterialTheme.typography.titleLarge,
+            color = TextDark,
+            fontWeight = FontWeight.Bold
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -163,12 +174,13 @@ fun PlanCard(
         Row(verticalAlignment = Alignment.Bottom) {
             Text(
                 text = price,
-                style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.Bold),
-                color = if (isRecommended) NeonCyan else TextWhite
+                style = MaterialTheme.typography.headlineLarge,
+                color = TextDark,
+                fontWeight = FontWeight.Bold
             )
             Text(
                 text = period,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodyLarge,
                 color = TextGray
             )
         }
@@ -183,14 +195,14 @@ fun PlanCard(
                 Icon(
                     Icons.Default.CheckCircle,
                     contentDescription = null,
-                    tint = if (isRecommended) NeonCyan else Color(0xFF00E676),
+                    tint = SuccessGreen,
                     modifier = Modifier.size(20.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = feature,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = TextWhite
+                    color = TextDark
                 )
             }
         }
@@ -199,10 +211,12 @@ fun PlanCard(
 
         Button(
             onClick = { /* Subscribe */ },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(48.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (isRecommended) NeonCyan else CharcoalDark,
-                contentColor = if (isRecommended) Color.Black else TextWhite
+                containerColor = if (isRecommended) AccentPurple else AccentBlue,
+                contentColor = Color.White
             ),
             shape = RoundedCornerShape(12.dp)
         ) {

@@ -13,6 +13,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
@@ -26,21 +28,21 @@ fun CommunityScreen(navController: NavController) {
     val tabs = listOf("Nearby", "Global", "My Reports")
 
     val alerts = listOf(
-        Alert("Pothole", "1.2 km • 2 min ago", Icons.Default.Warning, WarmOrange, 12, 5),
+        Alert("Pothole", "1.2 km • 2 min ago", Icons.Default.Warning, WarningOrange, 12, 5),
         Alert("Construction", "3.4 km • 10 min ago", Icons.Default.Construction, Color(0xFFFFD600), 8, 3),
         Alert("Accident", "5.1 km • 25 min ago", Icons.Default.CarCrash, ErrorRed, 24, 12),
-        Alert("Speed Trap", "2.8 km • 1h ago", Icons.Default.Speed, NeonCyan, 15, 7)
+        Alert("Speed Trap", "2.8 km • 1h ago", Icons.Default.Speed, AccentBlue, 15, 7)
     )
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(CharcoalDark)
+            .background(BackgroundLight)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(24.dp)
+                .padding(20.dp)
         ) {
             // Header
             Row(
@@ -50,11 +52,18 @@ fun CommunityScreen(navController: NavController) {
             ) {
                 Text(
                     text = "Alerts",
-                    style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
-                    color = TextWhite
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = TextDark,
+                    fontWeight = FontWeight.Bold
                 )
-                IconButton(onClick = { /* Add new alert */ }) {
-                    Icon(Icons.Default.Add, contentDescription = "Add", tint = NeonCyan)
+                IconButton(
+                    onClick = { navController.navigate("report_issue") },
+                    modifier = Modifier
+                        .shadow(2.dp, CircleShape)
+                        .clip(CircleShape)
+                        .background(AccentPurple)
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = "Add", tint = Color.White)
                 }
             }
 
@@ -63,19 +72,25 @@ fun CommunityScreen(navController: NavController) {
             // Tabs
             TabRow(
                 selectedTabIndex = selectedTab,
-                containerColor = CharcoalMedium,
-                contentColor = TextWhite,
-                indicator = { }
+                containerColor = Color.Transparent,
+                contentColor = TextDark,
+                indicator = { },
+                divider = { }
             ) {
                 tabs.forEachIndexed { index, title ->
                     Tab(
                         selected = selectedTab == index,
                         onClick = { selectedTab = index },
+                        modifier = Modifier
+                            .padding(horizontal = 4.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                            .background(if (selectedTab == index) AccentPurple else Color.Transparent),
                         text = {
                             Text(
                                 title,
-                                color = if (selectedTab == index) NeonCyan else TextGray,
-                                fontWeight = if (selectedTab == index) FontWeight.Bold else FontWeight.Normal
+                                color = if (selectedTab == index) Color.White else TextGray,
+                                fontWeight = if (selectedTab == index) FontWeight.Bold else FontWeight.Normal,
+                                style = MaterialTheme.typography.bodyMedium
                             )
                         }
                     )
@@ -89,7 +104,7 @@ fun CommunityScreen(navController: NavController) {
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 items(alerts) { alert ->
-                    AlertCard(alert = alert)
+                    ModernAlertCard(alert = alert)
                 }
             }
         }
@@ -97,19 +112,21 @@ fun CommunityScreen(navController: NavController) {
 }
 
 @Composable
-fun AlertCard(alert: Alert) {
+fun ModernAlertCard(alert: Alert) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(CharcoalMedium, RoundedCornerShape(16.dp))
-            .border(1.dp, Color.White.copy(alpha = 0.05f), RoundedCornerShape(16.dp))
+            .shadow(2.dp, RoundedCornerShape(16.dp))
+            .clip(RoundedCornerShape(16.dp))
+            .background(CardWhite)
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
             modifier = Modifier
                 .size(48.dp)
-                .background(alert.color.copy(alpha = 0.2f), CircleShape),
+                .clip(CircleShape)
+                .background(alert.color.copy(alpha = 0.2f)),
             contentAlignment = Alignment.Center
         ) {
             Icon(
@@ -125,8 +142,9 @@ fun AlertCard(alert: Alert) {
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = alert.title,
-                style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
-                color = TextWhite
+                style = MaterialTheme.typography.titleSmall,
+                color = TextDark,
+                fontWeight = FontWeight.Bold
             )
             Text(
                 text = alert.location,
@@ -136,20 +154,20 @@ fun AlertCard(alert: Alert) {
         }
 
         Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Default.ThumbUp, contentDescription = null, tint = TextGray, modifier = Modifier.size(16.dp))
                 Spacer(modifier = Modifier.width(4.dp))
-                Text(alert.upvotes.toString(), color = TextGray, style = MaterialTheme.typography.bodySmall)
+                Text(alert.upvotes.toString(), color = TextGray, style = MaterialTheme.typography.labelSmall)
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Default.Comment, contentDescription = null, tint = TextGray, modifier = Modifier.size(16.dp))
                 Spacer(modifier = Modifier.width(4.dp))
-                Text(alert.comments.toString(), color = TextGray, style = MaterialTheme.typography.bodySmall)
+                Text(alert.comments.toString(), color = TextGray, style = MaterialTheme.typography.labelSmall)
             }
-            Icon(Icons.Default.Share, contentDescription = "Share", tint = TextGray, modifier = Modifier.size(20.dp))
+            Icon(Icons.Default.Share, contentDescription = "Share", tint = TextGray, modifier = Modifier.size(18.dp))
         }
     }
 }

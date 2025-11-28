@@ -3,49 +3,26 @@ package com.example.ridersathi.ui.screens.login
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.ridersathi.ui.theme.CharcoalDark
-import com.example.ridersathi.ui.theme.CharcoalMedium
-import com.example.ridersathi.ui.theme.NeonCyan
-import com.example.ridersathi.ui.theme.TextGray
-import com.example.ridersathi.ui.theme.TextWhite
+import com.example.ridersathi.ui.theme.*
 
 @Composable
 fun LoginScreen(navController: NavController) {
@@ -55,54 +32,55 @@ fun LoginScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(CharcoalDark)
-            .padding(24.dp),
+            .background(BackgroundLight)
+            .padding(24.dp)
+            .verticalScroll(rememberScrollState()),
         contentAlignment = Alignment.Center
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth()
         ) {
-            // Helmet Illustration Placeholder
+            // Hero Illustration Placeholder
             Box(
                 modifier = Modifier
                     .size(180.dp)
+                    .shadow(8.dp, RoundedCornerShape(30.dp))
+                    .clip(RoundedCornerShape(30.dp))
                     .background(
-                        brush = Brush.radialGradient(
-                            colors = listOf(Color.White.copy(alpha = 0.1f), Color.Transparent)
-                        ),
-                        shape = CircleShape
+                        brush = Brush.linearGradient(
+                            colors = listOf(SoftPurple, SoftPink)
+                        )
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                // Inner Helmet Shape
-                Box(
-                    modifier = Modifier
-                        .size(120.dp)
-                        .background(CharcoalMedium, RoundedCornerShape(30.dp))
-                        .border(2.dp, NeonCyan.copy(alpha = 0.5f), RoundedCornerShape(30.dp)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text("Helmet", color = TextGray)
-                }
+                Icon(
+                    Icons.Default.DirectionsBike,
+                    contentDescription = null,
+                    tint = Color.White,
+                    modifier = Modifier.size(80.dp)
+                )
             }
 
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
             // Login Card
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(CharcoalMedium.copy(alpha = 0.5f), RoundedCornerShape(24.dp))
-                    .border(1.dp, Color.White.copy(alpha = 0.05f), RoundedCornerShape(24.dp))
+                    .shadow(4.dp, RoundedCornerShape(24.dp))
+                    .clip(RoundedCornerShape(24.dp))
+                    .background(CardWhite)
                     .padding(24.dp)
             ) {
                 Text(
-                    text = "Login / Signup",
-                    style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-                    color = TextWhite.copy(alpha = 0.8f),
-                    modifier = Modifier.padding(bottom = 24.dp)
+                    text = "Welcome back",
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = TextDark,
+                    fontWeight = FontWeight.Bold
                 )
+
+                Spacer(modifier = Modifier.height(24.dp))
 
                 OutlinedTextField(
                     value = email,
@@ -110,13 +88,13 @@ fun LoginScreen(navController: NavController) {
                     placeholder = { Text("Email", color = TextGray) },
                     modifier = Modifier.fillMaxWidth(),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = NeonCyan,
-                        unfocusedBorderColor = Color.White.copy(alpha = 0.1f),
-                        focusedContainerColor = CharcoalDark,
-                        unfocusedContainerColor = CharcoalDark,
-                        cursorColor = NeonCyan,
-                        focusedTextColor = TextWhite,
-                        unfocusedTextColor = TextWhite
+                        focusedBorderColor = AccentPurple,
+                        unfocusedBorderColor = Color(0xFFE0E0E0),
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
+                        cursorColor = AccentPurple,
+                        focusedTextColor = TextDark,
+                        unfocusedTextColor = TextDark
                     ),
                     shape = RoundedCornerShape(12.dp),
                     singleLine = true
@@ -130,53 +108,41 @@ fun LoginScreen(navController: NavController) {
                     placeholder = { Text("Password", color = TextGray) },
                     modifier = Modifier.fillMaxWidth(),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = NeonCyan,
-                        unfocusedBorderColor = Color.White.copy(alpha = 0.1f),
-                        focusedContainerColor = CharcoalDark,
-                        unfocusedContainerColor = CharcoalDark,
-                        cursorColor = NeonCyan,
-                        focusedTextColor = TextWhite,
-                        unfocusedTextColor = TextWhite
+                        focusedBorderColor = AccentPurple,
+                        unfocusedBorderColor = Color(0xFFE0E0E0),
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
+                        cursorColor = AccentPurple,
+                        focusedTextColor = TextDark,
+                        unfocusedTextColor = TextDark
                     ),
                     shape = RoundedCornerShape(12.dp),
                     singleLine = true,
-                    visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation()
+                    visualTransformation = PasswordVisualTransformation()
                 )
 
-                Box(
-                    modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = Alignment.CenterEnd
-                ) {
-                    TextButton(onClick = { /* Forgot Password */ }) {
-                        Text(
-                            text = "Forgot Password?",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = TextGray
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(24.dp))
 
                 Button(
                     onClick = { navController.navigate("main") },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(50.dp)
-                        .shadow(10.dp, shape = RoundedCornerShape(12.dp), spotColor = NeonCyan.copy(alpha = 0.3f)),
+                        .height(56.dp)
+                        .shadow(4.dp, RoundedCornerShape(16.dp)),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = NeonCyan,
-                        contentColor = Color.Black
+                        containerColor = AccentPurple,
+                        contentColor = Color.White
                     ),
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(16.dp)
                 ) {
                     Text(
-                        text = "Login",
-                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                        text = "Continue",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold
                     )
                 }
 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
                     text = "Or continue with",
@@ -192,15 +158,15 @@ fun LoginScreen(navController: NavController) {
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    SocialIcon(text = "G")
+                    SocialIconButton("G")
                     Spacer(modifier = Modifier.width(16.dp))
-                    SocialIcon(text = "f")
+                    SocialIconButton("f")
                     Spacer(modifier = Modifier.width(16.dp))
-                    SocialIcon(text = "")
+                    SocialIconButton("")
                 }
-                
+
                 Spacer(modifier = Modifier.height(24.dp))
-                
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
@@ -213,8 +179,9 @@ fun LoginScreen(navController: NavController) {
                     )
                     Text(
                         text = "Sign Up",
-                        style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold),
-                        color = NeonCyan,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = AccentPurple,
+                        fontWeight = FontWeight.Bold,
                         modifier = Modifier.clickable { navController.navigate("signup") }
                     )
                 }
@@ -224,18 +191,20 @@ fun LoginScreen(navController: NavController) {
 }
 
 @Composable
-fun SocialIcon(text: String) {
+fun SocialIconButton(text: String) {
     Box(
         modifier = Modifier
             .size(48.dp)
-            .background(CharcoalDark, CircleShape)
-            .border(1.dp, Color.White.copy(alpha = 0.1f), CircleShape),
+            .shadow(2.dp, CircleShape)
+            .clip(CircleShape)
+            .background(CardWhite)
+            .border(1.dp, Color(0xFFE0E0E0), CircleShape),
         contentAlignment = Alignment.Center
     ) {
         Text(
             text = text,
             style = MaterialTheme.typography.titleMedium,
-            color = TextWhite
+            color = TextDark
         )
     }
 }

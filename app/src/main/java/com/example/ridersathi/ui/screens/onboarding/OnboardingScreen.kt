@@ -32,10 +32,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.ridersathi.ui.theme.CharcoalDark
-import com.example.ridersathi.ui.theme.NeonCyan
+import com.example.ridersathi.ui.theme.BackgroundLight
+import com.example.ridersathi.ui.theme.AccentPurple
 import com.example.ridersathi.ui.theme.TextGray
-import com.example.ridersathi.ui.theme.TextWhite
+import com.example.ridersathi.ui.theme.TextDark
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -47,7 +47,7 @@ fun OnboardingScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(CharcoalDark)
+            .background(BackgroundLight)
     ) {
         HorizontalPager(
             state = pagerState,
@@ -70,7 +70,7 @@ fun OnboardingScreen(navController: NavController) {
                 modifier = Modifier.padding(bottom = 32.dp)
             ) {
                 repeat(3) { iteration ->
-                    val color = if (pagerState.currentPage == iteration) NeonCyan else Color.Gray.copy(alpha = 0.5f)
+                    val color = if (pagerState.currentPage == iteration) AccentPurple else Color.Gray.copy(alpha = 0.5f)
                     val width = if (pagerState.currentPage == iteration) 24.dp else 8.dp
                     Box(
                         modifier = Modifier
@@ -97,7 +97,7 @@ fun OnboardingScreen(navController: NavController) {
                     .fillMaxWidth()
                     .height(56.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = NeonCyan,
+                    containerColor = AccentPurple,
                     contentColor = Color.Black
                 ),
                 shape = RoundedCornerShape(12.dp)
@@ -145,7 +145,7 @@ fun OnboardingPage(page: Int) {
                 .fillMaxWidth()
                 .background(
                     brush = Brush.verticalGradient(
-                        colors = listOf(illustrationColor, CharcoalDark)
+                        colors = listOf(illustrationColor, BackgroundLight)
                     )
                 ),
             contentAlignment = Alignment.Center
@@ -159,7 +159,7 @@ fun OnboardingPage(page: Int) {
             ) {
                 Text(
                     text = "Illustration $page",
-                    color = TextWhite.copy(alpha = 0.5f)
+                    color = TextDark.copy(alpha = 0.5f)
                 )
             }
         }
@@ -175,7 +175,7 @@ fun OnboardingPage(page: Int) {
             Text(
                 text = title,
                 style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
-                color = TextWhite,
+                color = TextDark,
                 textAlign = TextAlign.Center
             )
 

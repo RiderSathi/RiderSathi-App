@@ -14,6 +14,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -25,23 +27,23 @@ import com.example.ridersathi.ui.theme.*
 @Composable
 fun ReportIssueScreen(navController: NavController) {
     val issueTypes = listOf(
-        IssueType("Pothole", Icons.Default.Warning, WarmOrange),
-        IssueType("Accident", Icons.Default.CarCrash, ErrorRed),
-        IssueType("Fuel Shortage", Icons.Default.LocalGasStation, Color(0xFFFFD600)),
-        IssueType("Roadblock", Icons.Default.Block, Color(0xFFFF6B6B)),
-        IssueType("Unsafe Zone", Icons.Default.Warning, Color(0xFFFFAB00)),
-        IssueType("Other", Icons.Default.Help, TextGray)
+        IssueType("Pothole", Icons.Default.Warning, SoftOrange),
+        IssueType("Accident", Icons.Default.CarCrash, Color(0xFFFFCDD2)),
+        IssueType("Fuel Shortage", Icons.Default.LocalGasStation, SoftYellow),
+        IssueType("Roadblock", Icons.Default.Block, Color(0xFFFFCCBC)),
+        IssueType("Unsafe Zone", Icons.Default.Warning, SoftPink),
+        IssueType("Other", Icons.Default.Help, SoftBlue)
     )
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(CharcoalDark)
+            .background(BackgroundLight)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(24.dp)
+                .padding(20.dp)
         ) {
             // Header
             Row(
@@ -49,13 +51,14 @@ fun ReportIssueScreen(navController: NavController) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 IconButton(onClick = { navController.popBackStack() }) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = TextWhite)
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = TextDark)
                 }
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = "Report an Issue",
-                    style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
-                    color = TextWhite
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = TextDark,
+                    fontWeight = FontWeight.Bold
                 )
             }
 
@@ -63,11 +66,12 @@ fun ReportIssueScreen(navController: NavController) {
 
             Text(
                 text = "What's the issue?",
-                style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-                color = TextWhite
+                style = MaterialTheme.typography.titleLarge,
+                color = TextDark,
+                fontWeight = FontWeight.Bold
             )
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             // Issue Grid
             LazyVerticalGrid(
@@ -76,7 +80,7 @@ fun ReportIssueScreen(navController: NavController) {
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(issueTypes) { issue ->
-                    IssueCard(issue = issue, onClick = { /* Navigate to details */ })
+                    ModernIssueCard(issue = issue, onClick = { /* Navigate to details */ })
                 }
             }
 
@@ -87,26 +91,30 @@ fun ReportIssueScreen(navController: NavController) {
                 onClick = { /* Submit */ },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp),
+                    .height(56.dp)
+                    .shadow(4.dp, RoundedCornerShape(16.dp)),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = NeonCyan,
-                    contentColor = Color.Black
+                    containerColor = AccentPurple,
+                    contentColor = Color.White
                 ),
                 shape = RoundedCornerShape(16.dp)
             ) {
-                Text("Report Issue", style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold))
+                Text("Report Issue", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
             }
+
+            Spacer(modifier = Modifier.height(20.dp))
         }
     }
 }
 
 @Composable
-fun IssueCard(issue: IssueType, onClick: () -> Unit) {
+fun ModernIssueCard(issue: IssueType, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .aspectRatio(1f)
-            .background(CharcoalMedium, RoundedCornerShape(16.dp))
-            .border(1.dp, Color.White.copy(alpha = 0.05f), RoundedCornerShape(16.dp))
+            .shadow(2.dp, RoundedCornerShape(20.dp))
+            .clip(RoundedCornerShape(20.dp))
+            .background(issue.color)
             .clickable(onClick = onClick)
             .padding(16.dp),
         contentAlignment = Alignment.Center
@@ -117,27 +125,24 @@ fun IssueCard(issue: IssueType, onClick: () -> Unit) {
         ) {
             Box(
                 modifier = Modifier
-                    .size(80.dp)
-                    .background(
-                        brush = Brush.radialGradient(
-                            colors = listOf(issue.color.copy(alpha = 0.2f), Color.Transparent)
-                        ),
-                        shape = RoundedCornerShape(16.dp)
-                    ),
+                    .size(64.dp)
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(Color.White.copy(alpha = 0.3f)),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     imageVector = issue.icon,
                     contentDescription = null,
-                    tint = issue.color,
-                    modifier = Modifier.size(40.dp)
+                    tint = TextDark,
+                    modifier = Modifier.size(32.dp)
                 )
             }
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = issue.name,
-                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
-                color = TextWhite
+                style = MaterialTheme.typography.titleSmall,
+                color = TextDark,
+                fontWeight = FontWeight.Bold
             )
         }
     }

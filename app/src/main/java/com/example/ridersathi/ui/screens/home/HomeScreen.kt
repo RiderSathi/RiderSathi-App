@@ -54,13 +54,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.ridersathi.ui.theme.CharcoalDark
-import com.example.ridersathi.ui.theme.CharcoalMedium
+import com.example.ridersathi.ui.theme.BackgroundLight
+import com.example.ridersathi.ui.theme.CardWhite
 import com.example.ridersathi.ui.theme.ErrorRed
-import com.example.ridersathi.ui.theme.NeonCyan
+import com.example.ridersathi.ui.theme.AccentPurple
 import com.example.ridersathi.ui.theme.TextGray
-import com.example.ridersathi.ui.theme.TextWhite
-import com.example.ridersathi.ui.theme.WarmOrange
+import com.example.ridersathi.ui.theme.TextDark
+import com.example.ridersathi.ui.theme.WarningOrange
 // import com.mapbox.maps.extension.compose.MapboxMap // Commented out until dependency is fully resolved/synced
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -73,8 +73,8 @@ fun HomeScreen(navController: NavController) {
     if (showZoneDetails) {
         ModalBottomSheet(
             onDismissRequest = { showZoneDetails = false },
-            containerColor = CharcoalMedium,
-            contentColor = TextWhite
+            containerColor = CardWhite,
+            contentColor = TextDark
         ) {
             Column(
                 modifier = Modifier
@@ -95,7 +95,7 @@ fun HomeScreen(navController: NavController) {
                         Text(
                             text = "High Accident Zone",
                             style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
-                            color = TextWhite
+                            color = TextDark
                         )
                         Text(
                             text = "Severity: High",
@@ -119,7 +119,7 @@ fun HomeScreen(navController: NavController) {
                     onClick = { showZoneDetails = false },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = NeonCyan,
+                        containerColor = AccentPurple,
                         contentColor = Color.Black
                     ),
                     shape = RoundedCornerShape(12.dp)
@@ -138,8 +138,8 @@ fun HomeScreen(navController: NavController) {
     if (addMarkerState != AddMarkerStep.NONE) {
         ModalBottomSheet(
             onDismissRequest = { addMarkerState = AddMarkerStep.NONE },
-            containerColor = CharcoalMedium,
-            contentColor = TextWhite
+            containerColor = CardWhite,
+            contentColor = TextDark
         ) {
             Column(
                 modifier = Modifier
@@ -150,15 +150,15 @@ fun HomeScreen(navController: NavController) {
                     Text(
                         text = "Report Hazard",
                         style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
-                        color = TextWhite
+                        color = TextDark
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     
                     val markerTypes = listOf(
                         MarkerType("Accident", Icons.Default.Warning, ErrorRed),
-                        MarkerType("Pothole", Icons.Default.Warning, WarmOrange), // Use appropriate icon
-                        MarkerType("Police", Icons.Default.Security, NeonCyan),
-                        MarkerType("Traffic", Icons.Default.DirectionsBike, TextWhite)
+                        MarkerType("Pothole", Icons.Default.Warning, WarningOrange), // Use appropriate icon
+                        MarkerType("Police", Icons.Default.Security, AccentPurple),
+                        MarkerType("Traffic", Icons.Default.DirectionsBike, TextDark)
                     )
 
                     LazyRow(
@@ -177,14 +177,14 @@ fun HomeScreen(navController: NavController) {
                                 Box(
                                     modifier = Modifier
                                         .size(64.dp)
-                                        .background(CharcoalDark, CircleShape)
+                                        .background(BackgroundLight, CircleShape)
                                         .border(1.dp, type.color, CircleShape),
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Icon(type.icon, contentDescription = null, tint = type.color)
                                 }
                                 Spacer(modifier = Modifier.height(8.dp))
-                                Text(type.name, style = MaterialTheme.typography.bodyMedium, color = TextWhite)
+                                Text(type.name, style = MaterialTheme.typography.bodyMedium, color = TextDark)
                             }
                         }
                     }
@@ -192,7 +192,7 @@ fun HomeScreen(navController: NavController) {
                     Text(
                         text = "Details: ${selectedMarkerType?.name}",
                         style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
-                        color = TextWhite
+                        color = TextDark
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     
@@ -202,8 +202,8 @@ fun HomeScreen(navController: NavController) {
                         listOf("Low", "Medium", "High").forEach { level ->
                             SuggestionChip(
                                 onClick = { /* Select Level */ },
-                                label = { Text(level, color = TextWhite) },
-                                colors = SuggestionChipDefaults.suggestionChipColors(containerColor = CharcoalDark)
+                                label = { Text(level, color = TextDark) },
+                                colors = SuggestionChipDefaults.suggestionChipColors(containerColor = BackgroundLight)
                             )
                         }
                     }
@@ -213,7 +213,7 @@ fun HomeScreen(navController: NavController) {
                     Button(
                         onClick = { addMarkerState = AddMarkerStep.NONE }, // Submit
                         modifier = Modifier.fillMaxWidth(),
-                        colors = ButtonDefaults.buttonColors(containerColor = NeonCyan, contentColor = Color.Black),
+                        colors = ButtonDefaults.buttonColors(containerColor = AccentPurple, contentColor = Color.Black),
                         shape = RoundedCornerShape(12.dp)
                     ) {
                         Text("Submit Report", fontWeight = FontWeight.Bold)
@@ -229,7 +229,7 @@ fun HomeScreen(navController: NavController) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(CharcoalDark)
+                .background(BackgroundLight)
                 .clickable { showZoneDetails = true } // Simulate zone click
         ) {
             // Simulated Map Background
@@ -257,15 +257,15 @@ fun HomeScreen(navController: NavController) {
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = TextGray) },
                 trailingIcon = {
                     IconButton(onClick = { navController.navigate("dashboard") }) {
-                        Icon(Icons.Default.AccountCircle, contentDescription = "Profile", tint = NeonCyan)
+                        Icon(Icons.Default.AccountCircle, contentDescription = "Profile", tint = AccentPurple)
                     }
                 },
                 colors = SearchBarDefaults.colors(
-                    containerColor = CharcoalMedium,
+                    containerColor = CardWhite,
                     dividerColor = TextGray,
                     inputFieldColors = SearchBarDefaults.inputFieldColors(
-                        focusedTextColor = TextWhite,
-                        unfocusedTextColor = TextWhite
+                        focusedTextColor = TextDark,
+                        unfocusedTextColor = TextDark
                     )
                 ),
                 modifier = Modifier.fillMaxWidth()
@@ -281,10 +281,10 @@ fun HomeScreen(navController: NavController) {
                 items(listOf("Home", "Work", "Saved rides")) { label ->
                     SuggestionChip(
                         onClick = { /* Navigate */ },
-                        label = { Text(label, color = TextWhite) },
+                        label = { Text(label, color = TextDark) },
                         colors = SuggestionChipDefaults.suggestionChipColors(
-                            containerColor = CharcoalMedium,
-                            labelColor = TextWhite
+                            containerColor = CardWhite,
+                            labelColor = TextDark
                         ),
                         shape = RoundedCornerShape(16.dp)
                     )
@@ -301,7 +301,7 @@ fun HomeScreen(navController: NavController) {
         ) {
             FloatingActionButton(
                 onClick = { /* Open Camera */ },
-                containerColor = WarmOrange,
+                containerColor = WarningOrange,
                 contentColor = Color.White,
                 shape = CircleShape
             ) {
@@ -319,8 +319,8 @@ fun HomeScreen(navController: NavController) {
 
             FloatingActionButton(
                 onClick = { /* Headset/Intercom */ },
-                containerColor = NeonCyan,
-                contentColor = CharcoalDark,
+                containerColor = AccentPurple,
+                contentColor = BackgroundLight,
                 shape = CircleShape
             ) {
                 Icon(Icons.Default.Headset, contentDescription = "Intercom")
@@ -329,8 +329,8 @@ fun HomeScreen(navController: NavController) {
             // Add Marker FAB
             FloatingActionButton(
                 onClick = { addMarkerState = AddMarkerStep.SELECT_TYPE },
-                containerColor = TextWhite,
-                contentColor = CharcoalDark,
+                containerColor = TextDark,
+                contentColor = BackgroundLight,
                 shape = CircleShape
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Add Marker")
@@ -342,13 +342,13 @@ fun HomeScreen(navController: NavController) {
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
-                .background(CharcoalMedium, RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
+                .background(CardWhite, RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
                 .padding(24.dp)
         ) {
             Text(
                 text = "Nearby Services",
                 style = MaterialTheme.typography.titleMedium,
-                color = TextWhite
+                color = TextDark
             )
             
             Spacer(modifier = Modifier.height(16.dp))
@@ -375,7 +375,7 @@ fun QuickActionItem(icon: ImageVector, label: String, color: Color) {
         modifier = Modifier
             .width(100.dp)
             .height(80.dp)
-            .background(CharcoalDark, RoundedCornerShape(12.dp)),
+            .background(BackgroundLight, RoundedCornerShape(12.dp)),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -389,7 +389,7 @@ fun QuickActionItem(icon: ImageVector, label: String, color: Color) {
         Text(
             text = label,
             style = MaterialTheme.typography.labelMedium,
-            color = TextWhite
+            color = TextDark
         )
     }
 }

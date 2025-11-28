@@ -26,7 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.ridersathi.R
-import com.example.ridersathi.ui.theme.NeonCyan
+import com.example.ridersathi.ui.theme.AccentPurple
 import kotlinx.coroutines.delay
 
 @Composable
@@ -67,7 +67,7 @@ fun SplashScreen(navController: NavController) {
                 modifier = Modifier
                     .size(120.dp)
                     .scale(scale.value)
-                    .background(NeonCyan.copy(alpha = 0.1f), shape = androidx.compose.foundation.shape.CircleShape)
+                    .background(AccentPurple.copy(alpha = 0.1f), shape = androidx.compose.foundation.shape.CircleShape)
                     .align(Alignment.CenterHorizontally),
                 contentAlignment = Alignment.Center
             ) {
@@ -75,7 +75,7 @@ fun SplashScreen(navController: NavController) {
                  Box(
                      modifier = Modifier
                          .size(80.dp)
-                         .background(NeonCyan, shape = androidx.compose.foundation.shape.CircleShape)
+                         .background(AccentPurple, shape = androidx.compose.foundation.shape.CircleShape)
                  )
             }
 

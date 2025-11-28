@@ -2,204 +2,205 @@ package com.example.ridersathi.ui.screens.profile
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.DarkMode
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.ExitToApp
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Security
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.ridersathi.ui.theme.CharcoalDark
-import com.example.ridersathi.ui.theme.CharcoalMedium
-import com.example.ridersathi.ui.theme.ErrorRed
-import com.example.ridersathi.ui.theme.NeonCyan
-import com.example.ridersathi.ui.theme.TextGray
-import com.example.ridersathi.ui.theme.TextWhite
+import com.example.ridersathi.ui.theme.*
 
 @Composable
 fun ProfileScreen(navController: NavController) {
-    var darkThemeEnabled by remember { mutableStateOf(true) }
-    var notificationsEnabled by remember { mutableStateOf(true) }
-    var ghostModeEnabled by remember { mutableStateOf(false) }
-
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(CharcoalDark)
+            .background(BackgroundLight)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(24.dp)
+                .padding(20.dp)
                 .verticalScroll(rememberScrollState())
         ) {
             // Header
             Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = { navController.popBackStack() }) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = TextWhite)
-                }
-                Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Profile & Settings",
-                    style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
-                    color = TextWhite
+                    text = "Profile",
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = TextDark,
+                    fontWeight = FontWeight.Bold
                 )
+                IconButton(onClick = { /* Settings */ }) {
+                    Icon(Icons.Default.Settings, contentDescription = "Settings", tint = TextDark)
+                }
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
-            // User Profile Section
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxWidth()
+            // User Profile Card
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .shadow(4.dp, RoundedCornerShape(20.dp))
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(CardWhite)
+                    .padding(20.dp)
             ) {
-                Box(
-                    modifier = Modifier
-                        .size(100.dp)
-                        .clip(CircleShape)
-                        .background(Brush.linearGradient(listOf(NeonCyan, Color.Blue))),
-                    contentAlignment = Alignment.Center
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxWidth()
                 ) {
+                    Box(
+                        modifier = Modifier
+                            .size(80.dp)
+                            .shadow(4.dp, CircleShape)
+                            .clip(CircleShape)
+                            .background(Brush.linearGradient(listOf(AccentPurple, AccentPink))),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "SA",
+                            style = MaterialTheme.typography.headlineMedium,
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
                     Text(
-                        text = "JD",
-                        style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.Bold),
-                        color = TextWhite
+                        text = "Sandra Glam",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = TextDark,
+                        fontWeight = FontWeight.Bold
                     )
-                }
-                
-                Spacer(modifier = Modifier.height(16.dp))
-                
-                Text(
-                    text = "John Doe",
-                    style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
-                    color = TextWhite
-                )
-                Text(
-                    text = "john.doe@example.com",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = TextGray
-                )
-                
-                Spacer(modifier = Modifier.height(16.dp))
-                
-                Button(
-                    onClick = { /* Edit Profile */ },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = CharcoalMedium,
-                        contentColor = NeonCyan
-                    ),
-                    shape = RoundedCornerShape(20.dp),
-                    modifier = Modifier.height(40.dp)
-                ) {
-                    Icon(Icons.Default.Edit, contentDescription = null, modifier = Modifier.size(16.dp))
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text("Edit Profile")
+                    Text(
+                        text = "Denmark, Copenhagen",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = TextGray
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        ProfileStat("72", "Follow")
+                        ProfileStat("162", "Followers")
+                    }
                 }
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
-            // Settings Section
+            // Stats Cards Row
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                StatCard(
+                    value = "53.3",
+                    unit = "kg",
+                    label = "Start weight",
+                    backgroundColor = SoftGreen,
+                    modifier = Modifier.weight(1f)
+                )
+                StatCard(
+                    value = "50.0",
+                    unit = "kg",
+                    label = "Good",
+                    backgroundColor = SoftBlue,
+                    modifier = Modifier.weight(1f)
+                )
+                StatCard(
+                    value = "740",
+                    unit = "kcal",
+                    label = "Daily calories",
+                    backgroundColor = SoftYellow,
+                    modifier = Modifier.weight(1f)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Menu Items
             Text(
-                text = "Preferences",
-                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                color = NeonCyan,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-
-            SettingsItem(
-                icon = Icons.Default.DarkMode,
-                title = "Dark Theme",
-                subtitle = "Always on for RiderSathi",
-                checked = darkThemeEnabled,
-                onCheckedChange = { darkThemeEnabled = it }
-            )
-            
-            Spacer(modifier = Modifier.height(12.dp))
-
-            SettingsItem(
-                icon = Icons.Default.Notifications,
-                title = "Notifications",
-                subtitle = "Push notifications for hazards",
-                checked = notificationsEnabled,
-                onCheckedChange = { notificationsEnabled = it }
+                text = "Activity",
+                style = MaterialTheme.typography.titleMedium,
+                color = TextDark,
+                fontWeight = FontWeight.Bold
             )
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            SettingsItem(
-                icon = Icons.Default.VisibilityOff,
-                title = "Ghost Mode",
-                subtitle = "Hide location from community",
-                checked = ghostModeEnabled,
-                onCheckedChange = { ghostModeEnabled = it }
+            MenuItemCard(
+                icon = Icons.Default.DirectionsRun,
+                title = "Physical activity",
+                subtitle = "2 days ago",
+                onClick = { }
             )
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(12.dp))
+
+            MenuItemCard(
+                icon = Icons.Default.BarChart,
+                title = "Statistics",
+                subtitle = "This year: 109 kilometers",
+                onClick = { }
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            MenuItemCard(
+                icon = Icons.Default.Route,
+                title = "Routes",
+                subtitle = "7",
+                onClick = { }
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
 
             // Features Section
             Text(
                 text = "Features",
-                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                color = NeonCyan,
-                modifier = Modifier.padding(bottom = 16.dp)
+                style = MaterialTheme.typography.titleMedium,
+                color = TextDark,
+                fontWeight = FontWeight.Bold
             )
 
-            // Premium Features Button
+            Spacer(modifier = Modifier.height(12.dp))
+
+            // Premium Button
             Button(
                 onClick = { navController.navigate("premium") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp),
+                    .height(56.dp)
+                    .shadow(2.dp, RoundedCornerShape(16.dp)),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = NeonCyan.copy(alpha = 0.2f),
-                    contentColor = NeonCyan
+                    containerColor = SoftPurple,
+                    contentColor = AccentPurple
                 ),
-                shape = RoundedCornerShape(12.dp),
-                border = androidx.compose.foundation.BorderStroke(1.dp, NeonCyan.copy(alpha = 0.5f))
+                shape = RoundedCornerShape(16.dp)
             ) {
                 Icon(Icons.Default.Star, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
@@ -213,83 +214,137 @@ fun ProfileScreen(navController: NavController) {
                 onClick = { navController.navigate("sos") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp),
+                    .height(56.dp)
+                    .shadow(2.dp, RoundedCornerShape(16.dp)),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = ErrorRed.copy(alpha = 0.2f),
+                    containerColor = Color(0xFFFFCDD2),
                     contentColor = ErrorRed
                 ),
-                shape = RoundedCornerShape(12.dp),
-                border = androidx.compose.foundation.BorderStroke(1.dp, ErrorRed.copy(alpha = 0.5f))
+                shape = RoundedCornerShape(16.dp)
             ) {
                 Icon(Icons.Default.Warning, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
                 Text("Emergency SOS", fontWeight = FontWeight.Bold)
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
-            // Account Actions
-            Text(
-                text = "Account",
-                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                color = NeonCyan,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-
-            Button(
-                onClick = { navController.navigate("login") {
-                    popUpTo("splash") { inclusive = true }
-                } },
+            // Logout Button
+            OutlinedButton(
+                onClick = {
+                    navController.navigate("login") {
+                        popUpTo("splash") { inclusive = true }
+                    }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = ErrorRed.copy(alpha = 0.1f),
+                colors = ButtonDefaults.outlinedButtonColors(
                     contentColor = ErrorRed
                 ),
-                shape = RoundedCornerShape(12.dp),
+                shape = RoundedCornerShape(16.dp),
                 border = androidx.compose.foundation.BorderStroke(1.dp, ErrorRed.copy(alpha = 0.3f))
             ) {
                 Icon(Icons.Default.ExitToApp, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Log Out", fontWeight = FontWeight.Bold)
+                Text("Log Out", fontWeight = FontWeight.Medium)
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+        }
+    }
+}
+
+@Composable
+fun ProfileStat(value: String, label: String) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(
+            text = value,
+            style = MaterialTheme.typography.titleLarge,
+            color = TextDark,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodySmall,
+            color = TextGray
+        )
+    }
+}
+
+@Composable
+fun StatCard(
+    value: String,
+    unit: String,
+    label: String,
+    backgroundColor: Color,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .shadow(2.dp, RoundedCornerShape(16.dp))
+            .clip(RoundedCornerShape(16.dp))
+            .background(backgroundColor)
+            .padding(12.dp)
+    ) {
+        Column {
+            Text(
+                text = label,
+                style = MaterialTheme.typography.labelSmall,
+                color = TextMedium
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Row(verticalAlignment = Alignment.Bottom) {
+                Text(
+                    text = value,
+                    style = MaterialTheme.typography.titleLarge,
+                    color = TextDark,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = unit,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = TextMedium
+                )
             }
         }
     }
 }
 
 @Composable
-fun SettingsItem(
+fun MenuItemCard(
     icon: ImageVector,
     title: String,
     subtitle: String,
-    checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit
+    onClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(CharcoalMedium, RoundedCornerShape(16.dp))
-            .border(1.dp, Color.White.copy(alpha = 0.05f), RoundedCornerShape(16.dp))
+            .shadow(2.dp, RoundedCornerShape(16.dp))
+            .clip(RoundedCornerShape(16.dp))
+            .background(CardWhite)
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
             modifier = Modifier
                 .size(40.dp)
-                .background(CharcoalDark, CircleShape),
+                .clip(CircleShape)
+                .background(BackgroundLight),
             contentAlignment = Alignment.Center
         ) {
-            Icon(icon, contentDescription = null, tint = TextWhite, modifier = Modifier.size(20.dp))
+            Icon(icon, contentDescription = null, tint = TextDark, modifier = Modifier.size(20.dp))
         }
-        
+
         Spacer(modifier = Modifier.width(16.dp))
-        
+
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
-                color = TextWhite
+                style = MaterialTheme.typography.titleSmall,
+                color = TextDark,
+                fontWeight = FontWeight.Medium
             )
             Text(
                 text = subtitle,
@@ -297,17 +352,11 @@ fun SettingsItem(
                 color = TextGray
             )
         }
-        
-        Switch(
-            checked = checked,
-            onCheckedChange = onCheckedChange,
-            colors = SwitchDefaults.colors(
-                checkedThumbColor = CharcoalDark,
-                checkedTrackColor = NeonCyan,
-                uncheckedThumbColor = TextGray,
-                uncheckedTrackColor = CharcoalDark,
-                uncheckedBorderColor = TextGray
-            )
+
+        Icon(
+            Icons.Default.ChevronRight,
+            contentDescription = null,
+            tint = TextGray
         )
     }
 }
